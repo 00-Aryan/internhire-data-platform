@@ -44,13 +44,22 @@ Built a centralized platform that:
 
 ## 🛠️ Tech Stack
 
-- Python (Data Processing, ETL)
-- SQL / SQLite (Database)
-- Flask (Backend API)
-- HTML/CSS / Jinja (Frontend)
-- REST APIs
+### Frontend
+- Next.js (React Framework)
 
----
+### Backend
+- Flask (REST API Layer)
+
+### Database & ORM
+- PostgreSQL / SQLite
+- Prisma ORM
+
+### Data Engineering
+- Python (ETL Pipeline)
+
+### Other Tools
+- REST APIs
+- Data Cleaning & Processing
 
 ## 📈 What I Learned
 
