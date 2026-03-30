@@ -1,0 +1,232 @@
+category	sub_category	skill
+Non-Technical	Communication & Interpersonal	Verbal Communication
+Non-Technical	Communication & Interpersonal	Written Communication
+Non-Technical	Communication & Interpersonal	Active Listening
+Non-Technical	Communication & Interpersonal	Public Speaking
+Non-Technical	Communication & Interpersonal	Presentation Skills
+Non-Technical	Communication & Interpersonal	Negotiation
+Non-Technical	Communication & Interpersonal	Persuasion
+Non-Technical	Communication & Interpersonal	Storytelling
+Non-Technical	Communication & Interpersonal	Empathy
+Non-Technical	Communication & Interpersonal	Conflict Resolution
+Non-Technical	Leadership & Management	Team Leadership
+Non-Technical	Leadership & Management	People Management
+Non-Technical	Leadership & Management	Strategic Thinking
+Non-Technical	Leadership & Management	Decision Making
+Non-Technical	Leadership & Management	Delegation
+Non-Technical	Leadership & Management	Coaching & Mentoring
+Non-Technical	Leadership & Management	Change Management
+Non-Technical	Leadership & Management	Performance Management
+Non-Technical	Leadership & Management	Crisis Management
+Non-Technical	Organizational & Productivity	Time Management
+Non-Technical	Organizational & Productivity	Multitasking
+Non-Technical	Organizational & Productivity	Prioritization
+Non-Technical	Organizational & Productivity	Goal Setting
+Non-Technical	Organizational & Productivity	Meeting Deadlines
+Non-Technical	Organizational & Productivity	Organization Skills
+Non-Technical	Organizational & Productivity	Planning & Scheduling
+Non-Technical	Organizational & Productivity	Attention to Detail
+Non-Technical	Problem-Solving & Critical Thinking	Analytical Thinking
+Non-Technical	Problem-Solving & Critical Thinking	Creativity
+Non-Technical	Problem-Solving & Critical Thinking	Innovation
+Non-Technical	Problem-Solving & Critical Thinking	Research & Analysis
+Non-Technical	Problem-Solving & Critical Thinking	Troubleshooting
+Non-Technical	Problem-Solving & Critical Thinking	Root Cause Analysis
+Non-Technical	Problem-Solving & Critical Thinking	Logical Reasoning
+Non-Technical	Problem-Solving & Critical Thinking	Design Thinking
+Non-Technical	Teamwork & Collaboration	Cross-Functional Collaboration
+Non-Technical	Teamwork & Collaboration	Adaptability
+Non-Technical	Teamwork & Collaboration	Flexibility
+Non-Technical	Teamwork & Collaboration	Emotional Intelligence
+Non-Technical	Teamwork & Collaboration	Dependability
+Non-Technical	Teamwork & Collaboration	Accountability
+Non-Technical	Teamwork & Collaboration	Open-Mindedness
+Non-Technical	Teamwork & Collaboration	Respectfulness
+Non-Technical	Work Ethic & Professionalism	Integrity
+Non-Technical	Work Ethic & Professionalism	Initiative
+Non-Technical	Work Ethic & Professionalism	Self-Motivation
+Non-Technical	Work Ethic & Professionalism	Responsibility
+Non-Technical	Work Ethic & Professionalism	Reliability
+Non-Technical	Work Ethic & Professionalism	Punctuality
+Non-Technical	Work Ethic & Professionalism	Work Ethic
+Non-Technical	Work Ethic & Professionalism	Confidentiality
+Non-Technical	Customer & Client-Facing	Customer Service
+Non-Technical	Customer & Client-Facing	Relationship Building
+Non-Technical	Customer & Client-Facing	Client Management
+Non-Technical	Customer & Client-Facing	Sales Skills
+Non-Technical	Customer & Client-Facing	Networking
+Non-Technical	Customer & Client-Facing	Product Knowledge
+Non-Technical	Customer & Client-Facing	Complaint Handling
+Non-Technical	Learning & Growth	Continuous Learning
+Non-Technical	Learning & Growth	Curiosity
+Non-Technical	Learning & Growth	Feedback Acceptance
+Non-Technical	Learning & Growth	Self-Development
+Non-Technical	Learning & Growth	Resilience
+Non-Technical	Learning & Growth	Stress Management
+Technical	Software Development	Python
+Technical	Software Development	Java
+Technical	Software Development	C#
+Technical	Software Development	C++
+Technical	Software Development	JavaScript
+Technical	Software Development	PHP
+Technical	Software Development	Ruby
+Technical	Software Development	Go
+Technical	Software Development	Swift
+Technical	Software Development	Kotlin
+Technical	Software Development	HTML
+Technical	Software Development	CSS
+Technical	Software Development	React
+Technical	Software Development	Angular
+Technical	Software Development	Vue.js
+Technical	Software Development	Node.js
+Technical	Software Development	Next.js
+Technical	Software Development	Express.js
+Technical	Software Development	Django
+Technical	Software Development	Flask
+Technical	Software Development	Spring Boot
+Technical	Software Development	Laravel
+Technical	Software Development	Android Development
+Technical	Software Development	iOS Development
+Technical	Software Development	Flutter
+Technical	Software Development	React Native
+Technical	Software Development	Git
+Technical	Software Development	GitHub
+Technical	Software Development	GitLab
+Technical	Software Development	Bitbucket
+Technical	Software Development	API Development
+Technical	Software Development	REST
+Technical	Software Development	GraphQL
+Technical	Data & Analytics	SQL
+Technical	Data & Analytics	NoSQL
+Technical	Data & Analytics	MongoDB
+Technical	Data & Analytics	Cassandra
+Technical	Data & Analytics	Data Analysis
+Technical	Data & Analytics	Excel
+Technical	Data & Analytics	Pandas
+Technical	Data & Analytics	R
+Technical	Data & Analytics	NumPy
+Technical	Data & Analytics	Tableau
+Technical	Data & Analytics	Power BI
+Technical	Data & Analytics	Looker
+Technical	Data & Analytics	Data Visualization
+Technical	Data & Analytics	Matplotlib
+Technical	Data & Analytics	D3.js
+Technical	Data & Analytics	Snowflake
+Technical	Data & Analytics	Redshift
+Technical	Data & Analytics	BigQuery
+Technical	Data & Analytics	TensorFlow
+Technical	Data & Analytics	PyTorch
+Technical	Data & Analytics	Scikit-Learn
+Technical	Data & Analytics	Data Engineering
+Technical	Data & Analytics	Airflow
+Technical	Data & Analytics	ETL
+Technical	Data & Analytics	Spark
+Technical	Data & Analytics	Hadoop
+Technical	Cloud & Infrastructure	AWS
+Technical	Cloud & Infrastructure	Azure
+Technical	Cloud & Infrastructure	Google Cloud Platform
+Technical	Cloud & Infrastructure	Docker
+Technical	Cloud & Infrastructure	Kubernetes
+Technical	Cloud & Infrastructure	Jenkins
+Technical	Cloud & Infrastructure	Terraform
+Technical	Cloud & Infrastructure	Ansible
+Technical	Cloud & Infrastructure	CI/CD
+Technical	Cloud & Infrastructure	Linux Administration
+Technical	Cloud & Infrastructure	Unix Administration
+Technical	Cloud & Infrastructure	Networking
+Technical	Cloud & Infrastructure	Cloud Security
+Technical	Cloud & Infrastructure	Serverless Computing
+Technical	Cybersecurity	Penetration Testing
+Technical	Cybersecurity	Network Security
+Technical	Cybersecurity	Vulnerability Assessment
+Technical	Cybersecurity	Ethical Hacking
+Technical	Cybersecurity	Incident Response
+Technical	Cybersecurity	Firewall Management
+Technical	Cybersecurity	Cryptography
+Technical	Cybersecurity	Security Compliance
+Technical	Cybersecurity	GDPR
+Technical	Cybersecurity	SOC 2
+Technical	Cybersecurity	ISO 27001
+Technical	UI/UX & Design	Figma
+Technical	UI/UX & Design	Adobe XD
+Technical	UI/UX & Design	Sketch
+Technical	UI/UX & Design	UX Research
+Technical	UI/UX & Design	Wireframing
+Technical	UI/UX & Design	Prototyping
+Technical	UI/UX & Design	Graphic Design
+Technical	UI/UX & Design	Photoshop
+Technical	UI/UX & Design	Illustrator
+Technical	UI/UX & Design	Branding
+Technical	UI/UX & Design	User Testing
+Technical	UI/UX & Design	Interaction Design
+Technical	UI/UX & Design	Accessibility Design
+Technical	Product & Project Management	Agile
+Technical	Product & Project Management	Scrum
+Technical	Product & Project Management	Kanban
+Technical	Product & Project Management	Jira
+Technical	Product & Project Management	Trello
+Technical	Product & Project Management	Asana
+Technical	Product & Project Management	ClickUp
+Technical	Product & Project Management	Product Lifecycle Management
+Technical	Product & Project Management	Requirements Gathering
+Technical	Product & Project Management	Stakeholder Management
+Technical	Product & Project Management	Risk Management
+Technical	Product & Project Management	Roadmapping
+Technical	Product & Project Management	Sprint Planning
+Technical	Quality Assurance & Testing	Manual Testing
+Technical	Quality Assurance & Testing	Automation Testing
+Technical	Quality Assurance & Testing	Selenium
+Technical	Quality Assurance & Testing	Cypress
+Technical	Quality Assurance & Testing	Playwright
+Technical	Quality Assurance & Testing	Unit Testing
+Technical	Quality Assurance & Testing	JUnit
+Technical	Quality Assurance & Testing	Mocha
+Technical	Quality Assurance & Testing	Jest
+Technical	Quality Assurance & Testing	Regression Testing
+Technical	Quality Assurance & Testing	Performance Testing
+Technical	Quality Assurance & Testing	JMeter
+Technical	Quality Assurance & Testing	LoadRunner
+Technical	Quality Assurance & Testing	Bug Tracking
+Technical	Quality Assurance & Testing	Test Case Design
+Technical	Finance - Accounting & Operations	Financial Modeling
+Technical	Finance - Accounting & Operations	Bookkeeping
+Technical	Finance - Accounting & Operations	Budgeting
+Technical	Finance - Accounting & Operations	Forecasting
+Technical	Finance - Accounting & Operations	Taxation
+Technical	Finance - Accounting & Operations	Payroll Management
+Technical	Finance - Accounting & Operations	ERP
+Technical	Finance - Accounting & Operations	SAP
+Technical	Finance - Accounting & Operations	Oracle ERP
+Technical	Finance - Accounting & Operations	NetSuite
+Technical	Finance - Accounting & Operations	Procurement
+Technical	Finance - Accounting & Operations	Supply Chain Management
+Technical	Marketing & Content	SEO
+Technical	Marketing & Content	SEM
+Technical	Marketing & Content	Social Media Marketing
+Technical	Marketing & Content	Content Writing
+Technical	Marketing & Content	Copywriting
+Technical	Marketing & Content	Email Marketing
+Technical	Marketing & Content	Mailchimp
+Technical	Marketing & Content	HubSpot
+Technical	Marketing & Content	Google Ads
+Technical	Marketing & Content	Meta Ads
+Technical	Marketing & Content	Marketing Analytics
+Technical	Marketing & Content	Brand Management
+Technical	Marketing & Content	Video Editing
+Technical	Emerging Technologies & Specialized Areas	Artificial Intelligence
+Technical	Emerging Technologies & Specialized Areas	Machine Learning
+Technical	Emerging Technologies & Specialized Areas	Natural Language Processing
+Technical	Emerging Technologies & Specialized Areas	Computer Vision
+Technical	Emerging Technologies & Specialized Areas	Deep Learning
+Technical	Emerging Technologies & Specialized Areas	Blockchain
+Technical	Emerging Technologies & Specialized Areas	Web3
+Technical	Emerging Technologies & Specialized Areas	Game Development
+Technical	Emerging Technologies & Specialized Areas	Unity
+Technical	Emerging Technologies & Specialized Areas	Unreal Engine
+Technical	Emerging Technologies & Specialized Areas	Internet of Things
+Technical	Emerging Technologies & Specialized Areas	Embedded Systems
+Technical	Emerging Technologies & Specialized Areas	Robotics
+Technical	Emerging Technologies & Specialized Areas	AR/VR Development
+Technical	Emerging Technologies & Specialized Areas	Scientific Computing
+Technical	Emerging Technologies & Specialized Areas	Legal Compliance Tools
+Technical	Emerging Technologies & Specialized Areas	Healthcare Informatics

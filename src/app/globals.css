@@ -1,0 +1,52 @@
+
+@import "tailwindcss";
+
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+/* @theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+} */
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+}
+
+html, body {
+  overscroll-behavior-y: none;
+}
+
+
+/*Temporary fix for dark mode issues. True Dark Mode NOT supported yet.*/
+input, textarea, select {
+  color: #171717; 
+}
+
+
+.landing-page {
+  background-color: #000000;
+  color: #ffffff;
+  flex-grow: 1;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.8s ease-out forwards;
+}

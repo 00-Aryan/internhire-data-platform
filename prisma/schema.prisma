@@ -1,0 +1,1048 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+
+// -------------------------------- ENUMS ---------------------------------------
+
+enum UserRole {
+  CANDIDATE
+  RECRUITER
+  ADMIN
+}
+
+enum EstablishmentType {
+  SCHOOL
+  COLLEGE
+  UNIVERSITY
+  INSTITUTE
+  COMPANY_PVT_LTD
+  COMPANY_LLP
+  PROPRIETORSHIP
+  FREELANCER
+}
+
+enum JobType {
+  INTERNSHIP_FULL_TIME
+  INTERNSHIP_PART_TIME
+  PROJECT_WORK_PART_TIME
+  PROJECT_WORK_FULL_TIME
+}
+
+enum WorkMode {
+  IN_OFFICE
+  HYBRID
+  REMOTE_ANYWHERE
+  REMOTE_SPECIFIC_CITY
+  FIELD_WORK
+}
+
+enum JobStatus {
+  DRAFT
+  UNDER_REVIEW
+  APPROVED
+  REJECTED
+  CLOSED
+}
+
+enum ApplicationStatus {
+  APPLIED
+  SHORTLISTED
+  REJECTED
+  HIRED
+}
+
+enum SenderType {
+  RECRUITER
+  CANDIDATE
+}
+
+enum PricingSource {
+  DEFAULT
+  REFERRAL
+  COUPON
+}
+
+enum SubscriptionStatus {
+  PENDING
+  ACTIVE
+  FAILED
+}
+
+enum TransactionType {
+  REFERRAL_REWARD
+  WITHDRAWAL
+  ADJUSTMENT
+}
+
+enum TransactionStatus {
+  PENDING
+  CREDITED
+  FAILED
+  CANCELLED
+}
+
+
+enum CouponType {
+  FLAT
+  PERCENT
+}
+
+
+// ----------------------------------- CORE AUTHENTICATION ------------------------------------------------
+
+
+model User {
+  id         String   @id @default(uuid())
+  email      String   @unique
+  phone      String   @unique
+  password   String   // Hashed
+  name       String
+  isVerified Boolean  @default(false) // not sure where we used it will discuss on it later
+  createdAt  DateTime @default(now())
+
+  //email AUTHENTICATION
+  emailVerified      DateTime? // Null means not verified
+  verificationToken  String?   @unique
+  verificationEmailSentAt DateTime?
+  verificationEmailCount  Int       @default(0)
+
+  //forgot password token
+  resetToken       String?   @unique
+  resetTokenExpiry DateTime?
+
+
+  // Relations
+  candidateProfile CandidateProfile?
+  recruiterProfile RecruiterProfile?
+  chatsSent        Chat[]
+}
+
+
+// --------------------------------ENTITIES ------------------------------------
+
+model Establishment {
+  id       String            @id @default(uuid())
+  type     EstablishmentType
+  name     String?
+  city     String?
+  district String?
+  state    String?
+  address  String?
+  website  String?
+  phone    String?
+  email    String?
+  cin      String?
+  gst      String?
+
+  // Relations
+  recruiters       RecruiterProfile[]
+  tenthEducation   TenthEducation[]
+  twelfthEducation TwelfthEducation[]
+  ugEducation      UGEducation[]
+  pgEducation      PGEducation[]
+}
+
+model RecruiterProfile {
+  id         String  @id @default(uuid())
+  department String?
+  designation String?
+  profileLink String?
+  referralCode String? @unique
+  referredBy   String?
+
+  // Relations
+  user            User          @relation(fields: [userId], references: [id])
+  userId          String        @unique
+  establishment   Establishment @relation(fields: [establishmentId], references: [id])
+  establishmentId String
+
+  postedJobs JobListing[]
+  payments   Payment[]
+  chats      Chat[]
+
+  // Subscription-based system
+  subscriptionExpiry  DateTime?
+  jobPostLimit        Int?
+  jobsPostedThisMonth Int       @default(0)
+}
+
+model CandidateProfile {
+  id       String    @id @default(uuid())
+  dob      DateTime?
+  city     String?
+  district String?
+  state    String?
+  isOver18 Boolean   @default(true)
+
+  referralCode String? @unique
+  referredBy   String?
+
+  // Subscription-based system
+  internshipsSubscriptionExpiry  DateTime?
+  assessmentsSubscriptionExpiry  DateTime?
+  canApplyToJobs                 Boolean   @default(false)
+  canTakeAssessments             Boolean   @default(false)
+
+  // Relations
+  user    User   @relation(fields: [userId], references: [id])
+  userId  String @unique
+
+  tenthEducation   TenthEducation?
+  twelfthEducation TwelfthEducation?
+  ugEducation      UGEducation[]
+  pgEducation      PGEducation[]
+  experience       Experience[]
+  skills           CandidateSkill[]
+  applications     Application[]
+  payments         Payment[]
+  chats            Chat[]
+
+  // Scoring system relations
+  rawScores        SubdomainRawScore[]
+  derivedScores    SubdomainDerivedScore[]
+  domainScores     DomainScore[]
+  globalScore      GlobalScore?
+
+    // Assessment answers
+  assessmentAnswers AssessmentAnswer[]
+
+  // New Relations
+  subscriptions Subscription[]
+  referral      Referral?      @relation("CandidateReferral")
+  referralsMade Referral[]     @relation("ReferrerRelation")
+  wallet        Wallet?
+}
+
+// -------------------------------------------- CANDIDATE EDUCATION DETAILS (NORMALIZED) ------------------------------------------
+
+model TenthEducation {
+  id              String  @id @default(uuid())
+  passingYear     Int
+  percentageMarks Float
+  stream          String?
+
+  candidate       CandidateProfile @relation(fields: [candidateId], references: [id])
+  candidateId     String           @unique
+  establishment   Establishment?   @relation(fields: [establishmentId], references: [id])
+  establishmentId String?
+}
+
+model TwelfthEducation {
+  id              String  @id @default(uuid())
+  passingYear     Int
+  percentageMarks Float
+  stream          String?
+
+  candidate       CandidateProfile @relation(fields: [candidateId], references: [id])
+  candidateId     String           @unique
+  establishment   Establishment?   @relation(fields: [establishmentId], references: [id])
+  establishmentId String?
+}
+
+model UGEducation {
+  id              String  @id @default(uuid())
+  department      String?
+  courseName      String
+  currentYear     Int?
+  joinYear        Int?
+  completionYear  Int
+  cgpa            Float?
+
+  candidate       CandidateProfile @relation(fields: [candidateId], references: [id])
+  candidateId     String
+  establishment   Establishment?   @relation(fields: [establishmentId], references: [id])
+  establishmentId String?
+}
+
+model PGEducation {
+  id              String  @id @default(uuid())
+  department      String?
+  courseName      String
+  currentYear     Int?
+  joinYear        Int?
+  completionYear  Int
+  cgpa            Float?
+
+  candidate       CandidateProfile @relation(fields: [candidateId], references: [id])
+  candidateId     String
+  establishment   Establishment?   @relation(fields: [establishmentId], references: [id])
+  establishmentId String?
+}
+
+model Experience {
+  id              String    @id @default(uuid())
+  companyName     String
+  roleTitle       String
+  description     String?
+  startDate       DateTime
+  endDate         DateTime?
+
+  candidate   CandidateProfile @relation(fields: [candidateId], references: [id])
+  candidateId String
+}
+
+// ------------------------------------------------- SKILLS ------------------------------------------------
+
+model Skill {
+  id          String @id @default(uuid())
+  name        String @unique
+  category    String?
+  subCategory String?
+
+  // Relations
+  candidates CandidateSkill[]
+  jobs       JobSkill[]
+}
+
+model CandidateSkill {
+  id          String @id @default(uuid())
+  candidate   CandidateProfile @relation(fields: [candidateId], references: [id])
+  candidateId String
+  skill       Skill  @relation(fields: [skillId], references: [id])
+  skillId     String
+
+  @@unique([candidateId, skillId])
+}
+
+// --- JOBS & APPLICATIONS ---
+
+model JobListing {
+  id                String    @id @default(uuid())
+
+  // ---------------- Core ----------------
+  title             String
+  description       String?
+  type              JobType?
+  workMode          WorkMode?
+
+  // ---------------- Metadata ----------------
+  domain            String?
+  locationCity      String?
+  locationDistrict  String?
+  locationState     String?
+
+  // ---------------- Timeline ----------------
+  deadline          DateTime?
+  startDate         DateTime?
+  endDate           DateTime?
+
+  // ---------------- Work setup ----------------
+  officeDaysPerWeek Int?
+
+  // ---------------- Compensation ----------------
+  isPaid            Boolean   @default(false)
+  stipendAmount     Int?
+  stipendFrequency  String?
+
+  // ---------------- Extras ----------------
+  hasCertificate    Boolean   @default(false)
+  customPhone       String?
+  customEmail       String?
+
+  // ---------------- State ----------------
+  status            JobStatus @default(DRAFT)
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  // ---------------- Relations ----------------
+  recruiterId String
+  recruiter   RecruiterProfile @relation(fields: [recruiterId], references: [id])
+
+  requiredSkills JobSkill[]
+  applications   Application[]
+  chats          Chat[]
+
+  @@index([recruiterId])
+  @@index([status])
+}
+
+
+model JobSkill {
+  id    String @id @default(uuid())
+  job   JobListing @relation(fields: [jobId], references: [id])
+  jobId String
+  skill Skill  @relation(fields: [skillId], references: [id])
+  skillId String
+
+  @@unique([jobId, skillId])
+}
+
+model Application {
+  id          String            @id @default(uuid())
+  appliedAt   DateTime          @default(now())
+  coverNote   String?
+  status      ApplicationStatus @default(APPLIED)
+
+  job         JobListing       @relation(fields: [jobId], references: [id])
+  jobId       String
+  candidate   CandidateProfile @relation(fields: [candidateId], references: [id])
+  candidateId String
+
+  @@unique([jobId, candidateId])
+}
+
+// ---------------------------------------------------- CHAT -----------------------------------------------------
+
+model Chat {
+  id         String     @id @default(uuid())
+  message    String
+  timestamp  DateTime   @default(now())
+  senderType SenderType
+
+  job         JobListing        @relation(fields: [jobId], references: [id])
+  jobId       String
+  sender      User              @relation(fields: [senderId], references: [id])
+  senderId    String
+  recruiter   RecruiterProfile? @relation(fields: [recruiterId], references: [id])
+  recruiterId String?
+  candidate   CandidateProfile? @relation(fields: [candidateId], references: [id])
+  candidateId String?
+}
+
+// --- PAYMENTS ---
+
+model Payment {
+  id        String   @id @default(uuid())
+  amount    Int
+  timestamp DateTime @default(now())
+  status    String
+  phone     String?
+  email     String?
+  remark    String?
+  
+  razorpayOrderId   String?
+  razorpayPaymentId String?   @unique
+  razorpaySignature String?
+  currency          String    @default("INR")
+
+  recruiter   RecruiterProfile? @relation(fields: [recruiterId], references: [id])
+  recruiterId String?
+  candidate   CandidateProfile? @relation(fields: [candidateId], references: [id])
+  candidateId String?
+
+  subscription   Subscription? @relation(fields: [subscriptionId], references: [id])
+  subscriptionId String?
+}
+
+
+// --- SECTION 1: ---
+
+model Domain {
+  id     String @id @default(uuid())
+  name   String @unique
+  weight Float  @default(1.0) 
+
+  // Relations
+  subdomains   Subdomain[]
+  domainScores DomainScore[]
+  questions    Question[]
+}
+
+model Subdomain {
+  id             String @id @default(uuid())
+  name           String
+  weightInDomain Float  @default(1.0)
+  maxScore       Int?   // Optional normalization factor
+
+  // Relations
+  domain   Domain @relation(fields: [domainId], references: [id])
+  domainId String
+
+  rawScores     SubdomainRawScore[]
+  derivedScores SubdomainDerivedScore[]
+  questions     Question[]
+
+    // Assessment answers
+  assessmentAnswers AssessmentAnswer[]
+
+  @@unique([domainId, name])
+}
+
+// Stores raw aggregated marks from a candidate's test
+model SubdomainRawScore {
+  candidateId String
+  subdomainId String
+  rawScore    Float 
+  maxScore    Float?   // Added per Blueprint
+  timestamp   DateTime @default(now())
+
+  // Relations
+  candidate CandidateProfile @relation(fields: [candidateId], references: [id])
+  subdomain Subdomain        @relation(fields: [subdomainId], references: [id])
+
+  @@id([candidateId, subdomainId])
+  @@index([timestamp])
+}
+
+// --- SECTION 2: DERIVED SCORES (BATCH CALCULATED) ---
+
+//
+model SubdomainDerivedScore {
+  candidateId    String
+  subdomainId    String
+  zScore         Float
+  percentile     Float
+  subdomainScore Float    // 00.000–99.999
+  subdomainRank  Int
+  calculatedAt   DateTime @default(now())
+
+  // Relations
+  candidate CandidateProfile @relation(fields: [candidateId], references: [id])
+  subdomain Subdomain        @relation(fields: [subdomainId], references: [id])
+
+  @@id([candidateId, subdomainId])
+  @@index([calculatedAt])
+}
+
+//
+model DomainScore {
+  candidateId  String
+  domainId     String
+  domainScore  Float    // 00.000–99.999
+  domainRank   Int
+  calculatedAt DateTime @default(now())
+
+  // Relations
+  candidate CandidateProfile @relation(fields: [candidateId], references: [id])
+  domain    Domain           @relation(fields: [domainId], references: [id])
+
+  @@id([candidateId, domainId])
+  @@index([calculatedAt])
+}
+
+//
+model GlobalScore {
+  candidateId  String   @id
+  globalScore  Float    // 00.000–99.999
+  globalRank   Int
+  calculatedAt DateTime @default(now())
+
+  // Relations
+  candidate CandidateProfile @relation(fields: [candidateId], references: [id])
+
+  @@index([calculatedAt])
+}
+
+// ============================================================================
+// ASSESSMENT ENGINE & QUESTION BANK
+// Based on 3-Layer Database Architecture
+// ============================================================================
+
+enum DifficultyLevel {
+  EASY
+  MEDIUM
+  HARD
+}
+
+// Lookup table for the 28+ question types
+model QuestionType {
+  id                   String     @id @default(uuid())
+  name                 String     @unique
+  allowedTimeSeconds   Int?       // Time allowed per question of this type (in seconds)
+  questions Question[]
+
+  // Assessment answers
+  assessmentAnswers    AssessmentAnswer[]
+}
+
+// Master Question Table (Metadata)
+model Question {
+  id               String          @id @default(uuid())
+  domainId         String
+  subdomainId      String
+  questionTypeId   String
+  difficultyLevel  DifficultyLevel
+  skillTags        Json?           // Stored as JSON array
+  timeLimitSeconds Int?
+  isActive         Boolean         @default(true)
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
+
+  // Relations
+  domain       Domain       @relation(fields: [domainId], references: [id]) 
+  subdomain    Subdomain    @relation(fields: [subdomainId], references: [id])
+  questionType QuestionType @relation(fields: [questionTypeId], references: [id])
+
+  // Relations to Specific Question Types (1-to-0/1)
+  mcqStandard           MCQStandard?
+  mcqMultiSelect        MCQMultiSelect?
+  mcqAssertionReason    MCQAssertionReason?
+  matchTheFollowing     MatchTheFollowing?
+  caseMini              CaseMini?
+  situationalJudgement  SJT?
+  roleScenario          RoleScenario?
+  dataInterpretation    DataInterpretation?
+  logicalPuzzle         LogicalPuzzle?
+  appliedMath           AppliedMath?
+  codeOutput            CodeOutput?
+  sqlTask               SQLTask?
+  businessCase          BusinessCase?
+  financeModel          FinanceModel?
+  marketingOptimization MarketingOptimization?
+  shortAnswer           ShortAnswer?
+  emailTask             EmailTask?
+  ideaTask              IdeaTask?
+  codeChallenge         CodeChallenge?
+  codeTestCases         CodeTestCases?
+  dragDrop              DragDrop?
+  fileUpload            FileUpload?
+  portfolioEvaluation   PortfolioEvaluation?
+  personality           Personality?
+  cognitiveAbility      CognitiveAbility?
+  randomizedNumeric     RandomizedNumeric?
+  dynamicCase           DynamicCase?
+  rapidFire             RapidFire?
+
+    // Assessment answers
+  assessmentAnswers AssessmentAnswer[]
+}
+
+// --- SPECIFIC QUESTION SCHEMAS (28 Types) ---
+//
+
+// 1.1 Standard MCQ
+model MCQStandard {
+  questionId    String @id
+  questionText  String
+  option1       String
+  option2       String
+  option3       String
+  option4       String
+  correctOption Int    // 1, 2, 3, 4
+  explanation   String?
+
+  question Question @relation(fields: [questionId], references: [id])
+}
+
+// 1.2 Multi-Select MCQ
+model MCQMultiSelect {
+  questionId       String  @id
+  questionText     String
+  option1          String
+  option2          String
+  option3          String
+  option4          String
+  isOption1Correct Boolean
+  isOption2Correct Boolean
+  isOption3Correct Boolean
+  isOption4Correct Boolean
+  explanation      String?
+
+  question Question @relation(fields: [questionId], references: [id])
+}
+
+// 1.3 Assertion–Reason
+model MCQAssertionReason {
+  questionId    String @id
+  assertionText String
+  reasonText    String
+  correctOption String // A, B, C, D
+
+  question Question @relation(fields: [questionId], references: [id])
+}
+
+// 1.4 Match The Following
+model MatchTheFollowing {
+  questionId     String @id
+  colAItem1      String
+  colAItem2      String
+  colAItem3      String
+  colAItem4      String
+  colBItem1      String
+  colBItem2      String
+  colBItem3      String
+  colBItem4      String
+  correctMatches Json   // {"1":"b", "2":"d", ...}
+
+  question Question @relation(fields: [questionId], references: [id])
+}
+
+// 2.1 Mini Case Scenario
+model CaseMini {
+  questionId    String @id
+  caseText      String // @db.Text
+  questionText  String
+  option1       String
+  option2       String
+  option3       String
+  option4       String
+  correctOption Int
+  explanation   String?
+
+  question Question @relation(fields: [questionId], references: [id])
+}
+
+// 2.2 Situational Judgement Test
+model SJT {
+  questionId    String @id
+  situationText String
+  option1       String
+  option2       String
+  option3       String
+  option4       String
+  bestOption    Int
+  worstOption   Int
+  rationale     String?
+
+  question Question @relation(fields: [questionId], references: [id])
+}
+
+// 2.3 Role-Based Scenario
+model RoleScenario {
+  questionId      String @id
+  roleContext     String
+  taskDescription String
+  option1         String
+  option2         String
+  option3         String
+  option4         String
+  correctOption   Int
+  explanation     String?
+
+  question Question @relation(fields: [questionId], references: [id])
+}
+
+// 3.1 Data Interpretation
+model DataInterpretation {
+  questionId    String  @id
+  dataBlob      Json    // Table data, chart values
+  questionText  String
+  option1       String
+  option2       String
+  option3       String
+  option4       String
+  correctOption Int
+  explanation   String?
+
+  question Question @relation(fields: [questionId], references: [id])
+}
+
+// 3.2 Logical Puzzle
+model LogicalPuzzle {
+  questionId    String  @id
+  puzzleText    String
+  option1       String
+  option2       String
+  option3       String
+  option4       String
+  correctOption Int
+  explanation   String?
+
+  question Question @relation(fields: [questionId], references: [id])
+}
+
+// 3.3 Applied Math
+model AppliedMath {
+  questionId           String  @id
+  problemStatement     String
+  inputValues          Json
+  formulaUsed          String?
+  correctNumericAnswer Float
+  explanation          String?
+
+  question Question @relation(fields: [questionId], references: [id])
+}
+
+// 4.1 Code Snippet (Predict Output)
+model CodeOutput {
+  questionId    String  @id
+  codeBlock     String  // @db.Text
+  option1       String
+  option2       String
+  option3       String
+  option4       String
+  correctOption Int
+  explanation   String?
+
+  question Question @relation(fields: [questionId], references: [id])
+}
+
+// 4.2 SQL Task
+model SQLTask {
+  questionId     String @id
+  tableStructure Json
+  questionPrompt String
+  correctQuery   String
+  expectedOutput Json
+
+  question Question @relation(fields: [questionId], references: [id])
+}
+
+// 4.3 Business Case Calculation
+model BusinessCase {
+  questionId      String  @id
+  caseText        String
+  dataPoints      Json
+  metricToCompute String
+  correctValue    Float
+  explanation     String?
+
+  question Question @relation(fields: [questionId], references: [id])
+}
+
+// 4.4 Financial Modeling
+model FinanceModel {
+  questionId      String  @id
+  financialInputs Json
+  metric          String
+  correctValue    Float
+  explanation     String?
+
+  question Question @relation(fields: [questionId], references: [id])
+}
+
+// 4.5 Marketing Campaign Optimization
+model MarketingOptimization {
+  questionId    String  @id
+  campaignData  Json
+  option1       String
+  option2       String
+  option3       String
+  option4       String
+  correctOption Int
+  reason        String?
+
+  question Question @relation(fields: [questionId], references: [id])
+}
+
+// 5.1 Short Text Input
+model ShortAnswer {
+  questionId    String @id
+  promptText    String
+  idealAnswer   String // @db.Text
+  gradingRubric Json
+
+  question Question @relation(fields: [questionId], references: [id])
+}
+
+// 5.2 Email Writing
+model EmailTask {
+  questionId       String @id
+  scenarioText     String
+  idealStructure   Json
+  sampleIdealEmail String // @db.Text
+
+  question Question @relation(fields: [questionId], references: [id])
+}
+
+// 5.3 Idea Generation
+model IdeaTask {
+  questionId         String @id
+  challengeStatement String
+  idealPoints        Json
+
+  question Question @relation(fields: [questionId], references: [id])
+}
+
+// 6.1 Coding Challenge
+model CodeChallenge {
+  questionId        String @id
+  problemStatement  String
+  constraints       Json
+  referenceSolution String // @db.Text
+  testCases         Json
+
+  question Question @relation(fields: [questionId], references: [id])
+}
+
+// 6.2 Multi-Testcase Validation
+model CodeTestCases {
+  questionId      String @id
+  testcases       Json
+  expectedResults Json
+
+  question Question @relation(fields: [questionId], references: [id])
+}
+
+// 7.1 Drag and Drop
+model DragDrop {
+  questionId      String @id
+  items           Json
+  correctSequence Json
+
+  question Question @relation(fields: [questionId], references: [id])
+}
+
+// 7.2 File Upload Task
+model FileUpload {
+  questionId         String @id
+  instructionsText   String
+  fileTypeAllowed    String
+  evaluationCriteria Json
+  sampleOutput       String?
+
+  question Question @relation(fields: [questionId], references: [id])
+}
+
+// 8.1 Portfolio
+model PortfolioEvaluation {
+  questionId        String @id
+  platform          String
+  evaluationMetrics Json
+
+  question Question @relation(fields: [questionId], references: [id])
+}
+
+// 9.1 Personality & Workstyle
+model Personality {
+  questionId    String @id
+  statementText String
+  trait         String
+
+  question Question @relation(fields: [questionId], references: [id])
+}
+
+// 9.2 Cognitive Ability
+model CognitiveAbility {
+  questionId    String @id
+  stimulusData  Json
+  correctAnswer String
+
+  question Question @relation(fields: [questionId], references: [id])
+}
+
+// 10.1 Randomized Numeric
+model RandomizedNumeric {
+  questionId     String @id
+  formula        String
+  variableRanges Json
+  correctAnswer  Float
+
+  question Question @relation(fields: [questionId], references: [id])
+}
+
+// 10.2 Dynamic Case
+model DynamicCase {
+  questionId   String @id
+  caseVersions Json
+  solutionKey  Json
+
+  question Question @relation(fields: [questionId], references: [id])
+}
+
+// 10.3 Rapid Fire
+model RapidFire {
+  questionId    String @id
+  promptText    String
+  correctAnswer String
+
+  question Question @relation(fields: [questionId], references: [id])
+}
+
+// --- CANDIDATE ASSESSMENT ANSWERS ---
+// Master table for all answers
+model AssessmentAnswer {
+  candidateId     String
+  questionId      String
+  subdomainId     String
+  questionTypeId  String
+  answeredAt      DateTime @default(now())
+
+  candidate       CandidateProfile @relation(fields: [candidateId], references: [id])
+  question        Question         @relation(fields: [questionId], references: [id])
+  subdomain       Subdomain        @relation(fields: [subdomainId], references: [id])
+  questionType    QuestionType     @relation(fields: [questionTypeId], references: [id])
+
+  mcqStandardAnswer AssessmentMCQStandardAnswer?
+
+  @@id([candidateId, questionId, subdomainId])
+  @@index([subdomainId])
+  @@index([answeredAt])
+}
+
+// Per-type table for MCQStandard answers
+model AssessmentMCQStandardAnswer {
+  candidateId   String
+  questionId    String
+  subdomainId   String
+  selectedOption Int
+
+  assessmentAnswer AssessmentAnswer @relation(fields: [candidateId, questionId, subdomainId], references: [candidateId, questionId, subdomainId], onDelete: Cascade)
+
+  @@id([candidateId, questionId, subdomainId])
+}
+
+// --- NEW MODELS ---
+
+model Subscription {
+  id            String             @id @default(uuid())
+  pricePaid     Int
+  pricingSource PricingSource
+  status        SubscriptionStatus
+  startedAt     DateTime?
+  expiresAt     DateTime
+  appliedCouponCode String?
+  createdAt     DateTime           @default(now())
+  updatedAt     DateTime           @updatedAt
+
+  candidate   CandidateProfile @relation(fields: [candidateId], references: [id])
+  candidateId String
+  payments    Payment[]
+
+  @@index([candidateId])
+}
+
+model Referral {
+  id           String   @id @default(uuid())
+  referralCode String   @unique
+  isLocked     Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  candidate   CandidateProfile  @relation("CandidateReferral", fields: [candidateId], references: [id])
+  candidateId String            @unique
+  referrer    CandidateProfile? @relation("ReferrerRelation", fields: [referrerId], references: [id])
+  referrerId  String?
+}
+
+model Wallet {
+  id        String   @id @default(uuid())
+  balance   Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  candidate   CandidateProfile @relation(fields: [candidateId], references: [id])
+  candidateId String           @unique
+  transactions WalletTransaction[]
+}
+
+model WalletTransaction {
+  id             String            @id @default(uuid())
+  type           TransactionType
+  status         TransactionStatus
+  amount         Int
+  description    String
+  subscriptionId String?
+  rewardLevel    Int?              // 1 = direct, 2 = indirect
+  metadata       Json?
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @updatedAt
+
+  wallet      Wallet @relation(fields: [walletId], references: [id])
+  walletId    String
+  candidateId String
+
+  @@unique([candidateId, subscriptionId, rewardLevel])
+  @@index([subscriptionId])
+  @@index([candidateId])
+  @@index([status])
+}
+
+
+model Coupon {
+  id          String   @id @default(cuid())
+  code        String   @unique
+  type        CouponType
+  value       Int
+  isActive    Boolean  @default(true)
+  expiresAt  DateTime?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}

@@ -1,0 +1,40 @@
+Sheet,Row,OriginalLocation,QuestionText
+146,93,Row 81,"In Level Design, what is 'Environmental Storytelling' and how can it be used to enrich the game's world?"
+158,103,Row 98,A React Native app experiences memory leaks when navigating between screens using a Stack Navigator. What is a common culprit?
+158,104,Row 99,"What is the main security risk of enabling ""AllowUniversalAccessFromFileURLs"" in a Cordova/Capacitor WebView configuration?"
+158,105,Row 100,"In the context of performance optimization, what does ""Overdraw"" refer to in a mobile application UI?"
+158,106,Row 101,"When developing a Capacitor plugin, why is it necessary to use the @CapacitorPlugin decorator in the Java/Swift code?"
+158,107,Row 102,You are implementing an offline-first mobile app. Which strategy is best for resolving data conflicts during synchronization?
+166,23,Row 10,An enterprise client requires that their employees' mobile devices be managed via MDM (Mobile Device Management). What is a primary security benefit of MDM for business apps?
+178,13,Row 3,A developer is transitioning a legacy multi-page website into a PWA to improve user engagement. Which architectural pattern is most suitable to ensure the UI remains interactive while the network is unstable?
+178,14,Row 4,"You are configuring the manifest.json file for a new PWA. To ensure the app can be installed on a user's home screen with a specific branding color for the browser's address bar, which property must be defined?"
+178,15,Row 5,"During the registration of a Service Worker, you notice that the worker does not control the current page until the next reload. What is the most effective way to make the Service Worker take control immediately after activation?"
+178,16,Row 6,"A retail PWA needs to show a ""No Internet Connection"" page when a user tries to browse products offline. Which caching strategy should be implemented in the Service Worker fetch event to achieve this?"
+178,17,Row 7,"When designing the Responsive Web Design (RWD) for a PWA, why is it recommended to use relative units like rem and em instead of fixed px for typography and spacing?"
+178,18,Row 8,A PWA needs to synchronize user data with a central server once the device regains connectivity after an offline session. Which Web API is specifically designed for this background task?
+178,19,Row 9,"To optimize the performance of a PWA on low-end mobile devices, a developer decides to implement ""Code Splitting."" What is the primary benefit of this technique in a PWA context?"
+178,20,Row 10,"Your team is debating whether to use a ""Cache-first"" or ""Stale-while-revalidate"" strategy for an avatar image that changes infrequently. Which approach offers the best balance of speed and freshness?"
+178,21,Row 11,"For security reasons, PWAs are required to be served over HTTPS. How does the use of HTTPS specifically protect the Service Worker from ""Man-in-the-Middle"" (MITM) attacks?"
+178,22,Row 12,"When implementing Push Notifications, the browser provides a PushSubscription object. What is the developer's responsibility regarding the ""endpoint"" URL contained in this object?"
+178,113,Row 49,"In a complex enterprise PWA, you discover that the Service Worker is becoming a bottleneck during high-frequency fetch events. Which strategy is most advanced for optimizing this?"
+226,100,Row 72,"What is ""Compositing""?"
+251,23,Row 3,"While planning a unit on ""The Great Depression"" for Class 12 History, how should a teacher prioritize content to ensure industry readiness and analytical depth?"
+251,24,Row 4,A teacher notices that three students in a Class 11 Political Science batch have hearing impairments. What is the most effective differentiated instruction strategy?
+251,25,Row 5,"During a session on ""Human Geography,"" a student asks a complex question about global migration that is not covered in the current syllabus. How should the teacher respond?"
+251,26,Row 6,"When designing a lesson plan for ""Indian Society"" in Sociology, how can a teacher best incorporate the ""Local to Global"" perspective as suggested by NEP 2020?"
+251,27,Row 7,A Class 12 student is consistently late for the first period and seems withdrawn. What is the most professional first step for a Humanities teacher?
+251,28,Row 8,"In a Psychology class, a teacher wants to use ICT to demonstrate the concept of ""Sensory Perception."" Which approach is most effective?"
+251,29,Row 9,"Which assessment strategy is best suited for evaluating the ""Critical Thinking"" skills of Class 12 students in a Legal Studies or History course?"
+251,30,Row 10,"A teacher is accused by a parent of being ""biased"" in the internal marking of a Sociology project. What is the most ethical way to handle this?"
+251,31,Row 11,"For a lesson on ""Sustainable Development"" in Economics, what is the most effective way to engage the community as part of the curriculum?"
+251,32,Row 12,"A teacher wants to practice ""Reflective Teaching"" after a poorly received lesson on ""International Relations."" What should they do?"
+251,33,Row 13,A Class 11 student expresses interest in pursuing Liberal Arts but their parents are insisting on a traditional professional course. What is the teacher's role?
+251,34,Row 14,"Which of the following is a key requirement for ""Inclusive Teaching"" in a Humanities classroom under the Indian Rights of Persons with Disabilities Act?"
+251,35,Row 15,"When introducing ""Digital Literacy"" in a Class 12 History class, which activity best demonstrates the ""Use of ICT""?"
+251,36,Row 16,"During a debate on ""Freedom of Speech"" in Political Science, the class becomes highly polarized and emotional. How should the teacher manage this?"
+251,37,Row 17,"What is the primary purpose of a ""Diagnostic Assessment"" conducted at the beginning of the academic year for Class 11 Humanities?"
+251,38,Row 18,"A teacher is asked to mentor a junior colleague who is struggling with classroom discipline. What is the most ""Collaborative"" approach?"
+251,39,Row 19,"While teaching ""Macroeconomics,"" the teacher notices students are struggling with the concept of ""GDP."" How should they adapt?"
+251,40,Row 20,"Which of these best defines ""Professionalism"" for a teacher interacting on social media platforms like LinkedIn or Facebook?"
+251,41,Row 21,"In the context of ""Community Engagement,"" how can a Geography teacher utilize local heritage sites for Class 11-12 students?"
+251,42,Row 22,"How does ""Continuous Professional Development"" (CPD) benefit a veteran Humanities teacher with 20 years of experience?"
